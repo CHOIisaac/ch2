@@ -5,7 +5,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 
-	public class UserValidator implements Validator {
+	public class GlobalValidator implements Validator {
 		@Override
 		public boolean supports(Class<?> clazz) {
 //			return User.class.equals(clazz); // 검증하려는 객체가 User타입인지 확인
@@ -14,7 +14,7 @@ import org.springframework.validation.Validator;
 
 		@Override
 		public void validate(Object target, Errors errors) { 
-			System.out.println("UserValidator.validate() is called");
+			System.out.println("GlobalValidator.validate() is called");
 
 			User user = (User)target;
 			
@@ -27,7 +27,7 @@ import org.springframework.validation.Validator;
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pwd", "required");
 			
 			if(id==null || id.length() <  5 || id.length() > 12) {
-				errors.rejectValue("id", "invalidLength");
+				errors.rejectValue("id", "invalidLength", new String[]{"5", "12"}, null);
 			}
 		}
 	}
